@@ -1,7 +1,21 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {NavLink} from "react-router-dom";
 
-export default class About extends Component {
-	render() {
-		return <div>我是About组件</div>;
-	}
+class About extends Component {
+    render() {
+        return (
+
+            <div>
+                <h2>About组件内容</h2>
+                <div>
+
+
+
+                </div>
+            </div>
+
+        );
+    }
 }
+
+export default About;
