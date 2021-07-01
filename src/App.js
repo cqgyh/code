@@ -1,81 +1,42 @@
-import React, {Component} from 'react';
-import Header from "./components/Header";
-import List from "./components/List";
-import Footer from "./components/Footer";
-import './App.css'
-
-class App extends Component {
-    state = {
-        todos: [
-            {id: '001', name: '吃饭', done: true},
-            {id: '002', name: '睡觉', done: true},
-            {id: '003', name: '打豆豆', done: false},
-        ]
-    }
-    addTodo = (newTodo) => {
-        this.setState({
-           todos:[newTodo,...this.state.todos]
-        })
-    }
-
-    checkUpdate = (id) => {
-        // console.log(id);
-        const newTodos =[...this.state.todos].map((item) => {
-            if (item.id===id){item.done=!item.done;}
-            return item;
-        })
-        // console.log(newTodos);
-        this.setState({
-            todos:newTodos
-        })
-
-    }
-    deleteOneTodo = (id) => {
-        const newTodos =[...this.state.todos].filter((item) => {
-            return  item.id!==id;
-        })
-        // console.log(newTodos);
-        this.setState({
-            todos:newTodos
-        })
-    }
-    deleteAllDidTodo = () => {
-        const newTodos =[...this.state.todos].filter((item) => {
-            return  !item.done;
-        })
-        // console.log(newTodos);
-        this.setState({
-            todos:newTodos
-        })
-    }
+import React from 'react';
+import Header from './components/Header';
+import {Route, NavLink, Switch, Redirect} from 'react-router-dom'
+import About from "./pages/About";
+import Home from "./pages/Home";
 
 
-    selectAllOrSelectNone = (flag) => {
-        const newTodos =[...this.state.todos].map((item) => {
-             item.done=flag;
-             return item;
-        })
-        // console.log(newTodos);
-        this.setState({
-            todos:newTodos
-        })
-
-
-    }
+class App extends React.Component {
 
     render() {
         return (
+            <div>
+                <Header/>
+                <div className="row">
+                    <div className="col-xs-2 col-xs-offset-2">
+                        <div className="list-group">
+                            <NavLink className="list-group-item" to="/about" activeClassName='cqq'>About</NavLink>
+                            <NavLink className="list-group-item" to="/home" activeClassName='cqq'>Home</NavLink>
+                        </div>
+                    </div>
+                    <div className="col-xs-6">
+                        <div className="panel">
+                            <div className="panel-body">
+                                <Switch>
+                                    <Route path="/about" component={About}/>
+                                    <Route path="/home" component={Home}/>
+                                    <Redirect to="/"/>
+                                </Switch>
 
-                <div className="todo-container">
-                    <Header addTodo={this.addTodo}/>
-                    <List todos={this.state.todos} checkUpdate={this.checkUpdate} deleteOneTodo={this.deleteOneTodo}/>
-                    <Footer todos={this.state.todos} deleteAllDidTodo={this.deleteAllDidTodo} selectAllOrSelectNone={this.selectAllOrSelectNone}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
 
-
-        );
+        )
     }
+
 }
 
 export default App;
